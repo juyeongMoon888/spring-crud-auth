@@ -27,6 +27,12 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.4.11")
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.4.11")
+
+    //이거없으면 .yml에 MySQL 커넥터 의존성문제로 driver-class-name: com.mysql.cj.jdbc.Driver 에러남
+    runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 tasks.named('test') {
