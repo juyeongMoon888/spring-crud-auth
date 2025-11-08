@@ -1,9 +1,12 @@
 package juyeong.springcrudauth;
 
 import juyeong.springcrudauth.dto.PostCreateRequest;
+import juyeong.springcrudauth.dto.PostEditedResponse;
 import juyeong.springcrudauth.dto.PostSummaryResponse;
 import juyeong.springcrudauth.model.Post;
+import juyeong.springcrudauth.model.PostEdit;
 import juyeong.springcrudauth.service.PostQueryService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,5 +77,23 @@ class SpringCrudAuthApplicationTests {
         assertThat(savedPosts)
                 .extracting("title")
                 .contains("공지사항-3", "공지사항-4");
+    }
+
+    @Test
+    void 게시글_수정() throws Exception {
+        PostCreateRequest dto5 = new PostCreateRequest();
+        dto5.setTitle("제목");
+        dto5.setContent("내용");
+
+        postQueryService.write(dto5.getTitle(), dto5.getContent());
+
+        PostEdit postEdit = new PostEdit();
+        postEdit.setTitle("제목 수정");
+        postEdit.setContent("내용 수정");
+
+        PostEditedResponse update = postQueryService.update(1, postEdit);
+
+        Assertions.assertEquals(update.getTitle(), "제목 수정");
+        Assertions.assertEquals(update.getContent(), "내용 수정");
     }
 }

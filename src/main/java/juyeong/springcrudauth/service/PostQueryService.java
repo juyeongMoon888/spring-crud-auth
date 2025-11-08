@@ -1,7 +1,9 @@
 package juyeong.springcrudauth.service;
 
+import juyeong.springcrudauth.dto.PostEditedResponse;
 import juyeong.springcrudauth.dto.PostSummaryResponse;
 import juyeong.springcrudauth.model.Post;
+import juyeong.springcrudauth.model.PostEdit;
 import juyeong.springcrudauth.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +48,12 @@ public class PostQueryService {
             res.add(new PostSummaryResponse(post.getTitle(), post.getContent()));
         }
         return res;
+    }
+
+    public PostEditedResponse update(int post_id, PostEdit postEdit) {
+        if (0 == postRepository.updateById(post_id, postEdit)) {
+            return null;
+        }
+        return new PostEditedResponse(postEdit.getTitle(), postEdit.getContent());
     }
 }
