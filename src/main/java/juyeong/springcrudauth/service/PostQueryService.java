@@ -1,5 +1,6 @@
 package juyeong.springcrudauth.service;
 
+import jakarta.transaction.Transactional;
 import juyeong.springcrudauth.dto.PostEditedResponse;
 import juyeong.springcrudauth.dto.PostSummaryResponse;
 import juyeong.springcrudauth.model.Post;
@@ -51,9 +52,13 @@ public class PostQueryService {
     }
 
     public PostEditedResponse update(int post_id, PostEdit postEdit) {
-        if (0 == postRepository.updateById(post_id, postEdit)) {
-            return null;
-        }
+        Post post = postRepository.findById(post_id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+
+        post.setTitle(postEdit.getTitle());
+        post.setContent(postEdit.getContent());
+
+        postRepository.save(post);
         return new PostEditedResponse(postEdit.getTitle(), postEdit.getContent());
     }
 }
