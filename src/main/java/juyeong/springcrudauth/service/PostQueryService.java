@@ -59,6 +59,13 @@ public class PostQueryService {
         post.setContent(postEdit.getContent());
 
         postRepository.save(post);
-        return new PostEditedResponse(postEdit.getTitle(), postEdit.getContent());
+
+        Long oldVersion = 0L;
+        Long newVersion = post.getVersion();
+
+        if (oldVersion == newVersion) {
+            return new PostEditedResponse(postEdit.getTitle(), postEdit.getContent(), false);
+        }
+        return new PostEditedResponse(postEdit.getTitle(), postEdit.getContent(), true);
     }
 }

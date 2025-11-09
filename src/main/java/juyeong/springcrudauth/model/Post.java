@@ -14,7 +14,11 @@ public class Post {
     private int id;
     private String title;
 
+
     private String content;
+
+    @Version
+    private Long version;
 
     public Post() {}
 
@@ -45,5 +49,9 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Long getVersion() {
+        return this.version;
     }
 }
